@@ -17,6 +17,12 @@ class LinkedList:
         self.head = None
         self.tail = None
 
+    def __init__(self, init_list=None):
+        self.head = None
+        if init_list:
+            for value in init_list:
+                self.append(value)
+
     def append(self, value):
         if self.head is None:
             self.head = Node(value)
@@ -102,6 +108,7 @@ class LinkedList:
         else:
             self.append(value)
 
+    # return new list
     def reverse(self):
         new_list = LinkedList()
         prev_node = None
@@ -166,3 +173,36 @@ class LinkedList:
 # reverse linked list
 # reversed_list = linkedList.reverse()
 # reversed_list.print()
+
+# check if linked list is circular
+def iscircular(list_with_loop):
+    slow = list_with_loop.head
+    fast = list_with_loop.head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            return True
+    return False
+
+list_with_loop = LinkedList([2, -1, 3, 0, 5])
+
+# Creating a loop where the last node points back to the second node
+loop_start = list_with_loop.head.next
+
+node = list_with_loop.head
+while node.next:
+    node = node.next
+node.next = loop_start
+
+# Test Cases
+
+# Create another circular linked list
+small_loop = LinkedList([0])
+small_loop.head.next = small_loop.head
+
+print ("Pass" if iscircular(list_with_loop) else "Fail")                  # Pass
+print ("Pass" if iscircular(LinkedList([-4, 7, 2, 5, -1])) else "Fail")   # Fail
+print ("Pass" if iscircular(LinkedList([1])) else "Fail")                 # Fail
+print ("Pass" if iscircular(small_loop) else "Fail")                      # Pass
+print ("Pass" if iscircular(LinkedList([])) else "Fail")                  # Fail
