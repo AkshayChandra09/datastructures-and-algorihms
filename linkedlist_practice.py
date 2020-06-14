@@ -1,9 +1,156 @@
 # Linked List Practice
-# Implement a linked list class. You have to define a few functions that perform the desirbale action. Your LinkedList class should be able to:
-#
 # Append data to the tail of the list and prepend to the head
 # Search the linked list for a value and return the node
 # Remove a node
 # Pop, which means to return the first node's value and delete the node from the list
 # Insert data at some position in the list
 # Return the size (length) of the linked list
+
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def append(self, value):
+        if self.head is None:
+            self.head = Node(value)
+            self.tail = self.head
+            return
+        if self.tail is None:
+            current = self.head
+            while current.next is not None:
+                current = current.next
+            current.next = Node(value)
+            self.tail = current.next
+        else:
+            self.tail.next = Node(value)
+            self.tail = self.tail.next
+
+    def prepend(self, value):
+        if self.head is None:
+            self.head = Node(value)
+            return
+        next = self.head
+        self.head = Node(value)
+        self.head.next = next
+
+    def search(self, value):
+        current = self.head
+        position = 0
+        while current is not None:
+            position += 1
+            if current.value == value:
+                return position
+            current = current.next
+        return None
+
+    def remove(self, value):
+        current = self.head
+        if current.value == value:
+            self.head = current.next
+            return
+        prev = None
+        next = current
+        while current is not None:
+            if current.value == value:
+                prev.next = next
+                break
+            prev = current
+            current = current.next
+            next = current.next
+
+    def pop(self):
+        if self.head is None:
+            return None
+        item = self.head.value
+        self.head = self.head.next
+        return item
+
+    def size(self):
+        if self.head is None:
+            return 0
+        current = self.head
+        size = 0
+        while current is not None:
+            size += 1
+            current = current.next
+        return size
+
+    def insert(self, value, pos):
+        if self.head is None:
+            self.head = Node(value)
+            return
+        if pos == 0:
+            self.prepend(value)
+            return
+        index = 0
+        node = self.head
+        while node.next and index <= pos:
+            if (pos - 1) == index:
+                new_node = Node(value)
+                new_node.next = node.next
+                node.next = new_node
+                return
+            index += 1
+            node = node.next
+        else:
+            self.append(value)
+
+    def to_list(self):
+        out = []
+        node = self.head
+        while node:
+            out.append(node.value)
+            node = node.next
+        return out
+
+    def print(self):
+        current = self.head
+        while current is not None:
+            print("{} ".format(current.value), end="")
+            current = current.next
+        print()
+
+
+# linkedList = LinkedList()
+# # print("Appending 1,2,3,4: ")
+# linkedList.append(2)
+# linkedList.append(1)
+# linkedList.append(3)
+# linkedList.append(4)
+# linkedList.append(3)
+#
+# linkedList.print()
+#
+# print("Prepending 0: ")
+# linkedList.prepend(0)
+# linkedList.prepend(-1)
+# linkedList.print()
+#
+# # search
+# print(linkedList.search(3))
+# print(linkedList.search(7))
+#
+# # remove
+# linkedList.remove(1)
+# linkedList.remove(3)
+# linkedList.print()
+# # pop
+# print(linkedList.pop())
+# print(linkedList.pop())
+# print(linkedList.pop())
+# linkedList.print()
+# # size
+# print(linkedList.size())
+
+# linkedList.insert(8,0)
+# linkedList.print()
+# # insert
+# linkedList.insert(6,0)
+# linkedList.print()
