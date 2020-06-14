@@ -102,6 +102,16 @@ class LinkedList:
         else:
             self.append(value)
 
+    def reverse(self):
+        new_list = LinkedList()
+        prev_node = None
+        for value in self.to_list():
+            new_node = Node(value)
+            new_node.next = prev_node
+            prev_node = new_node
+        new_list.head = prev_node
+        return new_list
+
     def to_list(self):
         out = []
         node = self.head
@@ -120,11 +130,11 @@ class LinkedList:
 
 # linkedList = LinkedList()
 # # print("Appending 1,2,3,4: ")
-# linkedList.append(2)
 # linkedList.append(1)
+# linkedList.append(2)
 # linkedList.append(3)
 # linkedList.append(4)
-# linkedList.append(3)
+# linkedList.append(5)
 #
 # linkedList.print()
 #
@@ -148,9 +158,11 @@ class LinkedList:
 # linkedList.print()
 # # size
 # print(linkedList.size())
-
 # linkedList.insert(8,0)
 # linkedList.print()
 # # insert
 # linkedList.insert(6,0)
 # linkedList.print()
+# reverse linked list
+# reversed_list = linkedList.reverse()
+# reversed_list.print()
